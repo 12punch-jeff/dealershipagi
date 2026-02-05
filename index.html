@@ -22,12 +22,12 @@
     <style>
         /* ===== Design Tokens ===== */
         :root {
-            /* Colors - Navy + Electric Blue */
-            --color-primary: #0F172A;
-            --color-primary-light: #1E293B;
-            --color-accent: #0EA5E9;
-            --color-accent-hover: #0284C7;
-            --color-accent-light: #E0F2FE;
+            /* Colors - Emerald Green (Agi brand) */
+            --color-primary: #064E3B;
+            --color-primary-light: #065F46;
+            --color-accent: #10B981;
+            --color-accent-hover: #059669;
+            --color-accent-light: #D1FAE5;
             --color-white: #FFFFFF;
             --color-gray-50: #F9FAFB;
             --color-gray-100: #F3F4F6;
@@ -161,14 +161,16 @@
         }
 
         .logo-icon {
-            width: 32px;
-            height: 32px;
-            background: var(--color-accent);
+            width: 40px;
+            height: 40px;
             border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
+            overflow: hidden;
+        }
+        
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .nav {
@@ -247,8 +249,14 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: url('images/hero-car.jpg') center/cover;
-            opacity: 0.15;
+            background: linear-gradient(135deg, rgba(6,78,59,0.95) 0%, rgba(16,185,129,0.85) 100%);
+        }
+        
+        .hero-mascot {
+            max-width: 280px;
+            margin: 0 auto var(--space-8);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
         }
         
         .hero .container {
@@ -681,7 +689,7 @@
         <div class="container header-inner">
             <a href="/" class="logo">
                 <span class="logo-icon">
-                    <i data-lucide="car" style="width: 18px; height: 18px;"></i>
+                    <img src="logo-agi-dogcar-v1.jpg" alt="Agi">
                 </span>
                 DealershipAGI
             </a>
@@ -697,13 +705,14 @@
     <!-- Hero -->
     <section class="hero">
         <div class="container">
+            <img src="agi-mascot-hero.jpg" alt="Agi - Your AI Car Buying Guide" class="hero-mascot">
             <span class="hero-badge">
                 <i data-lucide="check-circle" style="width: 14px; height: 14px;"></i>
                 Free • Private • No obligation
             </span>
-            <h1>Stop Dreading the Dealership</h1>
+            <h1>Meet Agi. Your Car-Buying Best Friend.</h1>
             <p class="hero-subtitle">
-                Tell us what you want. We negotiate with dealers on your behalf and bring you the best deals — without revealing who you are until you're ready.
+                Tell Agi what you want. He'll fetch the best deals from dealers — and keep your info private until you're ready to buy.
             </p>
             <div class="hero-cta">
                 <a href="/start" class="btn btn-primary btn-large">
@@ -744,8 +753,8 @@
                         <i data-lucide="message-circle" style="width: 28px; height: 28px;"></i>
                     </div>
                     <span class="step-number">STEP 1</span>
-                    <h3>Tell Us What You Want</h3>
-                    <p>Chat with Scout, our AI assistant. In 3 minutes, we'll understand exactly what you're looking for — vehicle type, budget, must-haves, timeline.</p>
+                    <h3>Tell Agi What You Want</h3>
+                    <p>Chat with Agi, your AI car-buying guide. In 3 minutes, he'll understand exactly what you're looking for — vehicle type, budget, must-haves, timeline.</p>
                 </div>
                 <div class="step">
                     <div class="step-icon">
@@ -825,7 +834,7 @@
     <section class="section">
         <div class="container">
             <div class="section-header">
-                <h2>Recent Deals Found by Scout</h2>
+                <h2>Recent Deals Found by Agi</h2>
                 <p>Real savings for real people. Here's what we've delivered.</p>
             </div>
             <div class="deals-grid">
@@ -838,7 +847,7 @@
                             <i data-lucide="trending-down" style="width: 14px; height: 14px;"></i>
                             Saved $6,200
                         </span>
-                        <div class="deal-scout">Found by Scout</div>
+                        <div class="deal-scout">Found by Agi</div>
                     </div>
                 </div>
                 <div class="deal-card">
@@ -850,7 +859,7 @@
                             <i data-lucide="trending-down" style="width: 14px; height: 14px;"></i>
                             Saved $2,400
                         </span>
-                        <div class="deal-scout">Found by Scout</div>
+                        <div class="deal-scout">Found by Agi</div>
                     </div>
                 </div>
                 <div class="deal-card">
@@ -862,7 +871,7 @@
                             <i data-lucide="trending-down" style="width: 14px; height: 14px;"></i>
                             Saved $4,800
                         </span>
-                        <div class="deal-scout">Found by Scout</div>
+                        <div class="deal-scout">Found by Agi</div>
                     </div>
                 </div>
                 <div class="deal-card">
@@ -874,7 +883,7 @@
                             <i data-lucide="trending-down" style="width: 14px; height: 14px;"></i>
                             Saved $3,600
                         </span>
-                        <div class="deal-scout">Found by Scout</div>
+                        <div class="deal-scout">Found by Agi</div>
                     </div>
                 </div>
                 <div class="deal-card">
@@ -886,7 +895,7 @@
                             <i data-lucide="trending-down" style="width: 14px; height: 14px;"></i>
                             Saved $12,500
                         </span>
-                        <div class="deal-scout">Found by Scout</div>
+                        <div class="deal-scout">Found by Agi</div>
                     </div>
                 </div>
             </div>
