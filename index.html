@@ -22,12 +22,12 @@
     <style>
         /* ===== Design Tokens ===== */
         :root {
-            /* Colors */
-            --color-primary: #1A1A2E;
-            --color-primary-light: #2D2D44;
-            --color-accent: #4F46E5;
-            --color-accent-hover: #4338CA;
-            --color-accent-light: #EEF2FF;
+            /* Colors - Navy + Electric Blue */
+            --color-primary: #0F172A;
+            --color-primary-light: #1E293B;
+            --color-accent: #0EA5E9;
+            --color-accent-hover: #0284C7;
+            --color-accent-light: #E0F2FE;
             --color-white: #FFFFFF;
             --color-gray-50: #F9FAFB;
             --color-gray-100: #F3F4F6;
@@ -238,6 +238,26 @@
         .hero {
             padding: calc(72px + var(--space-20)) 0 var(--space-20);
             text-align: center;
+            position: relative;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+            color: white;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('images/hero-car.jpg') center/cover;
+            opacity: 0.15;
+        }
+        
+        .hero .container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            color: white;
         }
 
         .hero-badge {
@@ -260,7 +280,7 @@
 
         .hero-subtitle {
             font-size: clamp(18px, 2.5vw, 20px);
-            color: var(--color-gray-500);
+            color: rgba(255,255,255,0.8);
             max-width: 600px;
             margin: 0 auto var(--space-8);
         }
@@ -285,7 +305,7 @@
             justify-content: center;
             gap: var(--space-6);
             margin-top: var(--space-10);
-            color: var(--color-gray-400);
+            color: rgba(255,255,255,0.7);
             font-size: 14px;
         }
 
@@ -581,6 +601,78 @@
             font-size: 14px;
             color: var(--color-gray-400);
         }
+
+        /* ===== Recent Deals ===== */
+        .deals-grid {
+            display: grid;
+            gap: var(--space-6);
+        }
+
+        @media (min-width: 640px) {
+            .deals-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .deals-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+
+        .deal-card {
+            background: var(--color-white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: transform var(--duration-normal), box-shadow var(--duration-normal);
+        }
+
+        .deal-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .deal-image {
+            height: 140px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .deal-content {
+            padding: var(--space-4);
+        }
+
+        .deal-vehicle {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--color-gray-900);
+            margin-bottom: var(--space-1);
+        }
+
+        .deal-type {
+            font-size: 12px;
+            color: var(--color-gray-500);
+            margin-bottom: var(--space-3);
+        }
+
+        .deal-savings {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-1);
+            padding: var(--space-1) var(--space-2);
+            background: var(--color-success-light);
+            color: var(--color-success);
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: var(--radius-md);
+        }
+
+        .deal-scout {
+            font-size: 11px;
+            color: var(--color-gray-400);
+            margin-top: var(--space-2);
+        }
     </style>
 </head>
 <body>
@@ -618,7 +710,7 @@
                     Find My Car
                     <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
                 </a>
-                <a href="#how-it-works" class="btn btn-secondary btn-large">
+                <a href="#how-it-works" class="btn btn-secondary btn-large" style="color: white; border-color: rgba(255,255,255,0.3);">
                     See How It Works
                 </a>
             </div>
@@ -724,6 +816,78 @@
                     </div>
                     <h4>No Obligation</h4>
                     <p>Don't like the offers? No problem. Walk away anytime. We're here to help, not pressure.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recent Deals -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Recent Deals Found by Scout</h2>
+                <p>Real savings for real people. Here's what we've delivered.</p>
+            </div>
+            <div class="deals-grid">
+                <div class="deal-card">
+                    <div class="deal-image" style="background-image: url('images/bmw-x5.jpg')"></div>
+                    <div class="deal-content">
+                        <div class="deal-vehicle">2024 BMW X5</div>
+                        <div class="deal-type">Luxury SUV</div>
+                        <span class="deal-savings">
+                            <i data-lucide="trending-down" style="width: 14px; height: 14px;"></i>
+                            Saved $6,200
+                        </span>
+                        <div class="deal-scout">Found by Scout</div>
+                    </div>
+                </div>
+                <div class="deal-card">
+                    <div class="deal-image" style="background-image: url('images/honda-civic.jpg')"></div>
+                    <div class="deal-content">
+                        <div class="deal-vehicle">2024 Honda Civic</div>
+                        <div class="deal-type">Economy Sedan</div>
+                        <span class="deal-savings">
+                            <i data-lucide="trending-down" style="width: 14px; height: 14px;"></i>
+                            Saved $2,400
+                        </span>
+                        <div class="deal-scout">Found by Scout</div>
+                    </div>
+                </div>
+                <div class="deal-card">
+                    <div class="deal-image" style="background-image: url('images/ford-f150.jpg')"></div>
+                    <div class="deal-content">
+                        <div class="deal-vehicle">2024 Ford F-150</div>
+                        <div class="deal-type">Full-Size Truck</div>
+                        <span class="deal-savings">
+                            <i data-lucide="trending-down" style="width: 14px; height: 14px;"></i>
+                            Saved $4,800
+                        </span>
+                        <div class="deal-scout">Found by Scout</div>
+                    </div>
+                </div>
+                <div class="deal-card">
+                    <div class="deal-image" style="background-image: url('images/jeep-wrangler.jpg')"></div>
+                    <div class="deal-content">
+                        <div class="deal-vehicle">2024 Jeep Wrangler</div>
+                        <div class="deal-type">Off-Road SUV</div>
+                        <span class="deal-savings">
+                            <i data-lucide="trending-down" style="width: 14px; height: 14px;"></i>
+                            Saved $3,600
+                        </span>
+                        <div class="deal-scout">Found by Scout</div>
+                    </div>
+                </div>
+                <div class="deal-card">
+                    <div class="deal-image" style="background-image: url('images/porsche.jpg')"></div>
+                    <div class="deal-content">
+                        <div class="deal-vehicle">2024 Porsche 911</div>
+                        <div class="deal-type">Luxury Sports</div>
+                        <span class="deal-savings">
+                            <i data-lucide="trending-down" style="width: 14px; height: 14px;"></i>
+                            Saved $12,500
+                        </span>
+                        <div class="deal-scout">Found by Scout</div>
+                    </div>
                 </div>
             </div>
         </div>
