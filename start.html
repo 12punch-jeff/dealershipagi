@@ -616,7 +616,22 @@
                 inputOnly: true,
                 field: 'trade_in_vehicle',
                 condition: (data) => data.trade_in === 'Yes, I have a trade-in',
-                progress: { step: "Trade-in details", percent: 82 }
+                progress: { step: "Trade-in details", percent: 80 }
+            },
+            {
+                id: 'trade_in_condition',
+                message: "How would you describe its condition?",
+                quickReplies: ["Excellent - like new", "Good - normal wear", "Fair - needs some work", "Poor - has issues"],
+                field: 'trade_in_condition',
+                condition: (data) => data.trade_in === 'Yes, I have a trade-in',
+                progress: { step: "Trade-in condition", percent: 83 }
+            },
+            {
+                id: 'search_radius',
+                message: "How far are you willing to travel for the right deal?",
+                quickReplies: ["Local only (50 mi)", "Regional (100 mi)", "Will travel (250 mi)", "Nationwide - ship it to me"],
+                field: 'search_radius',
+                progress: { step: "Search area", percent: 85 }
             },
             {
                 id: 'location',
