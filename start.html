@@ -15,10 +15,12 @@
     
     <style>
         :root {
-            --color-primary: #1A1A2E;
-            --color-accent: #4F46E5;
-            --color-accent-hover: #4338CA;
-            --color-accent-light: #EEF2FF;
+            /* Agi Emerald Brand Colors */
+            --color-primary: #064E3B;
+            --color-primary-light: #065F46;
+            --color-accent: #10B981;
+            --color-accent-hover: #059669;
+            --color-accent-light: #D1FAE5;
             --color-white: #FFFFFF;
             --color-gray-50: #F9FAFB;
             --color-gray-100: #F3F4F6;
@@ -54,7 +56,7 @@
             font-size: 16px;
             line-height: 1.5;
             color: var(--color-gray-700);
-            background: var(--color-gray-50);
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
             -webkit-font-smoothing: antialiased;
         }
 
@@ -63,7 +65,7 @@
             display: flex;
             flex-direction: column;
             height: 100%;
-            max-width: 600px;
+            max-width: 500px;
             margin: 0 auto;
             background: var(--color-white);
         }
@@ -73,8 +75,7 @@
                 height: calc(100% - 48px);
                 margin: 24px auto;
                 border-radius: var(--radius-xl);
-                box-shadow: var(--shadow-md);
-                border: 1px solid var(--color-gray-100);
+                box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
             }
         }
 
@@ -101,25 +102,43 @@
         }
 
         .chat-avatar {
-            width: 40px;
-            height: 40px;
-            background: var(--color-accent);
-            border-radius: var(--radius-full);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+        
+        .chat-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .chat-title {
             font-weight: 600;
-            font-size: 15px;
+            font-size: 16px;
             color: var(--color-gray-900);
         }
 
         .chat-subtitle {
             font-size: 13px;
-            color: var(--color-gray-400);
+            color: var(--color-accent);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .online-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--color-accent);
+            border-radius: var(--radius-full);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
         .chat-close {
@@ -157,9 +176,9 @@
 
         .progress-fill {
             height: 100%;
-            background: var(--color-accent);
+            background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-accent) 100%);
             border-radius: var(--radius-full);
-            transition: width 0.3s ease;
+            transition: width 0.5s ease;
         }
 
         .progress-text {
@@ -182,8 +201,8 @@
 
         .message {
             display: flex;
-            gap: 12px;
-            max-width: 85%;
+            gap: 10px;
+            max-width: 88%;
             animation: messageIn 0.3s ease;
         }
 
@@ -210,20 +229,22 @@
         .message-avatar {
             width: 32px;
             height: 32px;
-            border-radius: var(--radius-full);
+            border-radius: var(--radius-md);
             flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            overflow: hidden;
         }
-
-        .message-bot .message-avatar {
-            background: var(--color-accent);
-            color: white;
+        
+        .message-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .message-user .message-avatar {
             background: var(--color-gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: var(--color-gray-500);
         }
 
@@ -231,6 +252,7 @@
             padding: 12px 16px;
             border-radius: var(--radius-lg);
             font-size: 15px;
+            line-height: 1.5;
         }
 
         .message-bot .message-content {
@@ -249,7 +271,7 @@
         .typing-indicator {
             display: flex;
             gap: 4px;
-            padding: 16px;
+            padding: 8px 0;
         }
 
         .typing-indicator span {
@@ -279,7 +301,7 @@
         .quick-reply {
             padding: 10px 16px;
             background: var(--color-white);
-            border: 1px solid var(--color-gray-200);
+            border: 2px solid var(--color-gray-200);
             border-radius: var(--radius-full);
             font-family: inherit;
             font-size: 14px;
@@ -297,6 +319,12 @@
 
         .quick-reply:active {
             transform: scale(0.98);
+        }
+        
+        .quick-reply.selected {
+            border-color: var(--color-accent);
+            background: var(--color-accent);
+            color: white;
         }
 
         /* ===== Input ===== */
@@ -321,7 +349,7 @@
         .input-field {
             flex: 1;
             padding: 12px 16px;
-            border: 1px solid var(--color-gray-200);
+            border: 2px solid var(--color-gray-200);
             border-radius: var(--radius-lg);
             font-family: inherit;
             font-size: 15px;
@@ -358,16 +386,68 @@
 
         .send-btn:hover {
             background: var(--color-accent-hover);
+            transform: scale(1.05);
         }
 
         .send-btn:disabled {
             background: var(--color-gray-200);
             cursor: not-allowed;
+            transform: none;
         }
 
         /* ===== Hidden ===== */
         .hidden {
             display: none !important;
+        }
+        
+        /* ===== Success State ===== */
+        .success-container {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--color-accent-light);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: var(--color-accent);
+        }
+        
+        .success-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--color-gray-900);
+            margin-bottom: 8px;
+        }
+        
+        .success-text {
+            color: var(--color-gray-500);
+            margin-bottom: 24px;
+        }
+        
+        .success-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: var(--color-accent);
+            color: white;
+            border: none;
+            border-radius: var(--radius-lg);
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--duration-normal);
+        }
+        
+        .success-btn:hover {
+            background: var(--color-accent-hover);
         }
     </style>
 </head>
@@ -377,11 +457,14 @@
         <div class="chat-header">
             <div class="chat-header-left">
                 <div class="chat-avatar">
-                    <i data-lucide="bot" style="width: 20px; height: 20px;"></i>
+                    <img src="logo-agi-dogcar-v1.jpg" alt="Agi">
                 </div>
                 <div>
-                    <div class="chat-title">Scout</div>
-                    <div class="chat-subtitle">Your car-finding assistant</div>
+                    <div class="chat-title">Agi</div>
+                    <div class="chat-subtitle">
+                        <span class="online-dot"></span>
+                        Online now
+                    </div>
                 </div>
             </div>
             <button class="chat-close" onclick="window.location.href='/'">
@@ -392,11 +475,11 @@
         <!-- Progress -->
         <div class="chat-progress">
             <div class="progress-bar">
-                <div class="progress-fill" id="progress-fill" style="width: 10%"></div>
+                <div class="progress-fill" id="progress-fill" style="width: 5%"></div>
             </div>
             <div class="progress-text">
-                <span id="progress-step">Getting started</span>
-                <span id="progress-percent">10%</span>
+                <span id="progress-step">Let's find your car</span>
+                <span id="progress-percent">5%</span>
             </div>
         </div>
 
@@ -411,7 +494,7 @@
         </div>
 
         <!-- Input -->
-        <div class="chat-input">
+        <div class="chat-input" id="chat-input">
             <div class="input-wrapper">
                 <textarea 
                     class="input-field" 
@@ -434,97 +517,144 @@
         const chatState = {
             step: 0,
             data: {},
-            isTyping: false
+            isTyping: false,
+            selectedFeatures: []
         };
 
         // ===== Conversation Flow =====
         const conversation = [
             {
                 id: 'welcome',
-                message: "Hi! I'm Scout, your car-finding assistant. 👋\n\nI'll ask a few questions to understand what you're looking for. Takes about 3 minutes. Ready to find your perfect deal?",
+                message: "Hey there! I'm Agi 🐕\n\nI help people find great deals on cars without the dealership headaches. Tell me what you're looking for, and I'll fetch the best options.\n\nReady to get started?",
                 quickReplies: ["Let's do it!", "How does this work?"],
-                progress: { step: "Getting started", percent: 10 }
+                progress: { step: "Let's find your car", percent: 5 }
             },
             {
                 id: 'vehicle_type',
-                message: "Great! First, what type of vehicle are you looking for?",
-                quickReplies: ["Car / Sedan", "SUV / Crossover", "Truck", "Van / Minivan", "Not sure yet"],
+                message: "Awesome! What type of vehicle are you looking for?",
+                quickReplies: ["🚗 Car / Sedan", "🚙 SUV / Crossover", "🛻 Truck", "🚐 Van / Minivan", "🤷 Not sure yet"],
                 field: 'vehicle_type',
-                progress: { step: "Vehicle type", percent: 20 }
+                progress: { step: "Vehicle type", percent: 15 }
+            },
+            {
+                id: 'specific_model',
+                message: "Do you have a specific make or model in mind? Or are you open to suggestions?",
+                quickReplies: ["I know what I want", "Open to suggestions", "I have a few in mind"],
+                field: 'model_preference',
+                progress: { step: "Vehicle details", percent: 22 }
+            },
+            {
+                id: 'specific_model_input',
+                message: "Great! What make/model are you looking for? (e.g., Honda Accord, Toyota RAV4)",
+                inputOnly: true,
+                field: 'target_vehicle',
+                condition: (data) => data.model_preference === 'I know what I want' || data.model_preference === 'I have a few in mind',
+                progress: { step: "Vehicle details", percent: 28 }
             },
             {
                 id: 'condition',
-                message: "Are you open to used vehicles, or looking strictly new?",
-                quickReplies: ["New only", "Used is fine", "Certified Pre-Owned", "No preference"],
+                message: "Are you looking for new or used?",
+                quickReplies: ["New only", "Used is great", "Certified Pre-Owned", "Either works"],
                 field: 'condition',
-                progress: { step: "New or used", percent: 30 }
+                progress: { step: "New or used", percent: 35 }
             },
             {
                 id: 'budget_type',
-                message: "How are you planning to pay?",
-                quickReplies: ["Monthly payments", "Cash / Full price"],
+                message: "How are you planning to pay for it?",
+                quickReplies: ["💳 Financing / Monthly", "💵 Cash / Full price", "Not sure yet"],
                 field: 'budget_type',
-                progress: { step: "Budget", percent: 40 }
+                progress: { step: "Budget", percent: 42 }
             },
             {
                 id: 'budget_monthly',
-                message: "What monthly payment range works for you?",
-                quickReplies: ["Under $300", "$300 - $500", "$500 - $700", "$700+"],
+                message: "What monthly payment range works for your budget?",
+                quickReplies: ["Under $300/mo", "$300 - $500/mo", "$500 - $700/mo", "$700 - $1000/mo", "$1000+/mo"],
                 field: 'budget_amount',
-                condition: (data) => data.budget_type === 'Monthly payments',
+                condition: (data) => data.budget_type === '💳 Financing / Monthly',
                 progress: { step: "Budget", percent: 50 }
             },
             {
                 id: 'budget_cash',
-                message: "What's your target purchase price?",
-                quickReplies: ["Under $20,000", "$20,000 - $35,000", "$35,000 - $50,000", "$50,000+"],
+                message: "What's your target price range?",
+                quickReplies: ["Under $20k", "$20k - $35k", "$35k - $50k", "$50k - $75k", "$75k+"],
                 field: 'budget_amount',
-                condition: (data) => data.budget_type === 'Cash / Full price',
+                condition: (data) => data.budget_type === '💵 Cash / Full price' || data.budget_type === 'Not sure yet',
                 progress: { step: "Budget", percent: 50 }
             },
             {
                 id: 'features',
-                message: "Any must-have features? Select all that apply, or type your own.",
-                quickReplies: ["AWD / 4WD", "Third row seating", "Great fuel economy", "Towing capacity", "Luxury features", "Advanced safety tech", "None specifically"],
+                message: "Any must-have features? Tap all that apply:",
+                quickReplies: ["AWD / 4WD", "Leather seats", "Sunroof", "3rd row seating", "Apple CarPlay", "Good MPG", "Towing", "Safety tech", "None specific"],
                 field: 'features',
                 multiSelect: true,
-                progress: { step: "Features", percent: 60 }
+                progress: { step: "Features", percent: 58 }
+            },
+            {
+                id: 'dealbreakers',
+                message: "Anything that's a dealbreaker? Things you definitely DON'T want?",
+                quickReplies: ["High mileage", "Certain colors", "Rebuilt title", "No specific dealbreakers"],
+                field: 'dealbreakers',
+                progress: { step: "Preferences", percent: 65 }
             },
             {
                 id: 'timeline',
-                message: "When do you need the vehicle?",
-                quickReplies: ["ASAP", "Within 2 weeks", "Within a month", "Just researching"],
+                message: "When do you need the vehicle by?",
+                quickReplies: ["ASAP - this week", "Within 2 weeks", "Within a month", "No rush, just looking"],
                 field: 'timeline',
-                progress: { step: "Timeline", percent: 70 }
-            },
-            {
-                id: 'location',
-                message: "What's your zip code? We'll find dealers within driving distance.",
-                inputOnly: true,
-                field: 'zip_code',
-                validate: (value) => /^\d{5}$/.test(value),
-                errorMessage: "Please enter a valid 5-digit zip code.",
-                progress: { step: "Location", percent: 80 }
+                progress: { step: "Timeline", percent: 72 }
             },
             {
                 id: 'trade_in',
                 message: "Do you have a vehicle to trade in?",
-                quickReplies: ["Yes", "No", "Maybe, depends on the offer"],
+                quickReplies: ["Yes, I have a trade-in", "No trade-in", "Maybe, depends on the deal"],
                 field: 'trade_in',
-                progress: { step: "Trade-in", percent: 85 }
+                progress: { step: "Trade-in", percent: 78 }
+            },
+            {
+                id: 'trade_in_details',
+                message: "What vehicle are you trading? (Year, Make, Model, rough mileage)",
+                inputOnly: true,
+                field: 'trade_in_vehicle',
+                condition: (data) => data.trade_in === 'Yes, I have a trade-in',
+                progress: { step: "Trade-in details", percent: 82 }
+            },
+            {
+                id: 'location',
+                message: "What's your zip code? I'll find dealers within a reasonable drive.",
+                inputOnly: true,
+                field: 'zip_code',
+                validate: (value) => /^\d{5}$/.test(value),
+                errorMessage: "Oops! Please enter a valid 5-digit zip code.",
+                progress: { step: "Location", percent: 86 }
+            },
+            {
+                id: 'name',
+                message: "Almost done! What's your first name?",
+                inputOnly: true,
+                field: 'first_name',
+                progress: { step: "Contact info", percent: 90 }
             },
             {
                 id: 'email',
-                message: "Almost done! Where should we send your offers?\n\nEnter your email address:",
+                message: "And what's the best email to reach you at?",
                 inputOnly: true,
                 field: 'email',
                 validate: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
-                errorMessage: "Please enter a valid email address.",
-                progress: { step: "Contact info", percent: 95 }
+                errorMessage: "That doesn't look like a valid email. Try again?",
+                progress: { step: "Contact info", percent: 94 }
+            },
+            {
+                id: 'phone',
+                message: "Last one — what's your phone number? (We'll only text you about your deals)",
+                inputOnly: true,
+                field: 'phone',
+                validate: (value) => /^[\d\s\-\(\)\.+]{10,}$/.test(value.replace(/\D/g, '')) && value.replace(/\D/g, '').length >= 10,
+                errorMessage: "Please enter a valid phone number.",
+                progress: { step: "Contact info", percent: 98 }
             },
             {
                 id: 'complete',
-                message: "Perfect! 🎉\n\nWe've got everything we need. Our team will start searching for your best deals right away.\n\nExpect to hear from us within 24 hours at {email}.\n\nIn the meantime, we'll send you a confirmation email with a link to check your status.",
+                message: "Perfect, {first_name}! 🎉\n\nI've got everything I need. I'm going to start sniffing out the best deals for you right now.\n\nExpect to hear from me within 24 hours with some great options. I'll send updates to {email}.\n\nTalk soon!",
                 isEnd: true,
                 progress: { step: "Complete!", percent: 100 }
             }
@@ -564,13 +694,15 @@
             // Replace {field} placeholders
             let processedContent = content;
             Object.keys(chatState.data).forEach(key => {
-                processedContent = processedContent.replace(`{${key}}`, chatState.data[key]);
+                processedContent = processedContent.replace(new RegExp(`{${key}}`, 'g'), chatState.data[key]);
             });
             
+            const avatarContent = isUser 
+                ? '<i data-lucide="user" style="width: 16px; height: 16px;"></i>'
+                : '<img src="logo-agi-dogcar-v1.jpg" alt="Agi">';
+            
             messageDiv.innerHTML = `
-                <div class="message-avatar">
-                    <i data-lucide="${isUser ? 'user' : 'bot'}" style="width: 16px; height: 16px;"></i>
-                </div>
+                <div class="message-avatar">${avatarContent}</div>
                 <div class="message-content">${processedContent.replace(/\n/g, '<br>')}</div>
             `;
             
@@ -585,9 +717,7 @@
             typingDiv.className = 'message message-bot';
             typingDiv.id = 'typing';
             typingDiv.innerHTML = `
-                <div class="message-avatar">
-                    <i data-lucide="bot" style="width: 16px; height: 16px;"></i>
-                </div>
+                <div class="message-avatar"><img src="logo-agi-dogcar-v1.jpg" alt="Agi"></div>
                 <div class="message-content">
                     <div class="typing-indicator">
                         <span></span><span></span><span></span>
@@ -595,7 +725,6 @@
                 </div>
             `;
             messagesEl.appendChild(typingDiv);
-            lucide.createIcons();
             messagesEl.scrollTop = messagesEl.scrollHeight;
         }
 
@@ -605,21 +734,57 @@
             if (typingEl) typingEl.remove();
         }
 
-        function showQuickReplies(replies) {
+        function showQuickReplies(replies, multiSelect = false) {
             quickRepliesEl.innerHTML = '';
+            chatState.selectedFeatures = [];
+            
             if (!replies || replies.length === 0) {
                 quickRepliesEl.classList.add('hidden');
                 return;
             }
             
             quickRepliesEl.classList.remove('hidden');
+            
             replies.forEach(reply => {
                 const btn = document.createElement('button');
                 btn.className = 'quick-reply';
                 btn.textContent = reply;
-                btn.onclick = () => handleUserInput(reply);
+                
+                if (multiSelect) {
+                    btn.onclick = () => {
+                        if (reply === 'None specific') {
+                            handleUserInput('None specific');
+                            return;
+                        }
+                        btn.classList.toggle('selected');
+                        if (btn.classList.contains('selected')) {
+                            chatState.selectedFeatures.push(reply);
+                        } else {
+                            chatState.selectedFeatures = chatState.selectedFeatures.filter(f => f !== reply);
+                        }
+                    };
+                } else {
+                    btn.onclick = () => handleUserInput(reply);
+                }
+                
                 quickRepliesEl.appendChild(btn);
             });
+            
+            if (multiSelect) {
+                const doneBtn = document.createElement('button');
+                doneBtn.className = 'quick-reply';
+                doneBtn.textContent = '✓ Done';
+                doneBtn.style.background = 'var(--color-accent)';
+                doneBtn.style.color = 'white';
+                doneBtn.style.borderColor = 'var(--color-accent)';
+                doneBtn.onclick = () => {
+                    const selected = chatState.selectedFeatures.length > 0 
+                        ? chatState.selectedFeatures.join(', ') 
+                        : 'None specific';
+                    handleUserInput(selected);
+                };
+                quickRepliesEl.appendChild(doneBtn);
+            }
         }
 
         function processStep() {
@@ -631,6 +796,8 @@
             
             showTyping();
             
+            const delay = 600 + Math.random() * 400;
+            
             setTimeout(() => {
                 hideTyping();
                 addMessage(step.message);
@@ -641,15 +808,16 @@
                     sendBtnEl.disabled = true;
                     userInputEl.placeholder = "Chat complete";
                     
-                    // In production, would submit data here
-                    console.log('Chat complete. Data:', chatState.data);
+                    // Submit data to backend
+                    submitLead(chatState.data);
+                    
                 } else if (step.inputOnly) {
                     showQuickReplies([]);
                     userInputEl.focus();
                 } else {
-                    showQuickReplies(step.quickReplies);
+                    showQuickReplies(step.quickReplies, step.multiSelect);
                 }
-            }, 800 + Math.random() * 400);
+            }, delay);
         }
 
         function handleUserInput(input) {
@@ -673,7 +841,7 @@
                 showTyping();
                 setTimeout(() => {
                     hideTyping();
-                    addMessage("Here's how it works:\n\n1️⃣ You tell me what car you're looking for\n2️⃣ We contact dealers and negotiate on your behalf\n3️⃣ You pick the best deal — only then do we share your info\n\nYour privacy is protected until you choose. Ready?");
+                    addMessage("Here's how it works:\n\n🔍 You tell me what car you want\n🏷️ I search inventory & contact dealers for you\n💰 I negotiate to get you the best price\n🤝 You only connect with the dealer when you're ready\n\nYour info stays private until YOU decide to share it. Ready to find your car?");
                     showQuickReplies(["Let's do it!"]);
                 }, 1000);
                 return;
@@ -693,6 +861,27 @@
             
             // Process next step
             setTimeout(processStep, 300);
+        }
+        
+        function submitLead(data) {
+            // Log for now - will connect to backend
+            console.log('Lead submitted:', data);
+            
+            // Store in localStorage for demo
+            const leads = JSON.parse(localStorage.getItem('agi_leads') || '[]');
+            leads.push({
+                ...data,
+                submitted_at: new Date().toISOString(),
+                status: 'new'
+            });
+            localStorage.setItem('agi_leads', JSON.stringify(leads));
+            
+            // In production, POST to your backend:
+            // fetch('/api/leads', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify(data)
+            // });
         }
 
         // ===== Event Listeners =====
