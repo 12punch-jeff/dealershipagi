@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyze a Deal — DealershipAGI</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    
+    <style>
+        :root {
+            --color-primary: #064E3B;
+            --color-accent: #10B981;
+            --color-accent-hover: #059669;
+            --color-accent-light: #D1FAE5;
+            --color-white: #FFFFFF;
+            --color-gray-50: #F9FAFB;
+            --color-gray-100: #F3F4F6;
+            --color-gray-200: #E5E7EB;
+            --color-gray-400: #9CA3AF;
+            --color-gray-500: #6B7280;
+            --color-gray-700: #374151;
+            --color-gray-900: #111827;
+            --color-great: #10B981;
+            --color-good: #3B82F6;
+            --color-fair: #F59E0B;
+            --color-high: #EF4444;
+            
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-sans);
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+            min-height: 100vh;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .card {
+            background: var(--color-white);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+
+        .header {
+            padding: 24px;
+            text-align: center;
+            border-bottom: 1px solid var(--color-gray-100);
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius-lg);
+            margin: 0 auto 16px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--color-gray-900);
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: var(--color-gray-500);
+            font-size: 15px;
+        }
+
+        .content {
+            padding: 24px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--color-gray-700);
+            margin-bottom: 8px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--color-gray-200);
+            border-radius: var(--radius-lg);
+            font-family: inherit;
+            font-size: 15px;
+            transition: border-color 0.2s;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--color-accent);
+        }
+
+        .input-field::placeholder {
+            color: var(--color-gray-400);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px 24px;
+            background: var(--color-accent);
+            color: white;
+            border: none;
+            border-radius: var(--radius-lg);
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            background: var(--color-accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn:disabled {
+            background: var(--color-gray-300);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .supported-sites {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 16px;
+            font-size: 13px;
+            color: var(--color-gray-400);
+        }
+
+        .supported-sites span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Results */
+        .results {
+            display: none;
+            padding: 24px;
+            border-top: 1px solid var(--color-gray-100);
+        }
+
+        .results.show {
+            display: block;
+        }
+
+        .vehicle-card {
+            background: var(--color-gray-50);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .vehicle-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .vehicle-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--color-gray-900);
+        }
+
+        .vehicle-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--color-gray-900);
+        }
+
+        .deal-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .deal-great { background: #D1FAE5; color: #065F46; }
+        .deal-good { background: #DBEAFE; color: #1E40AF; }
+        .deal-fair { background: #FEF3C7; color: #92400E; }
+        .deal-high { background: #FEE2E2; color: #991B1B; }
+
+        .vehicle-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .detail-item {
+            font-size: 14px;
+        }
+
+        .detail-label {
+            color: var(--color-gray-500);
+        }
+
+        .detail-value {
+            font-weight: 500;
+            color: var(--color-gray-900);
+        }
+
+        .price-analysis {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--color-gray-100);
+        }
+
+        .price-row:last-child {
+            border-bottom: none;
+            font-weight: 600;
+        }
+
+        .price-label {
+            color: var(--color-gray-600);
+        }
+
+        .price-value {
+            font-weight: 500;
+        }
+
+        .price-value.savings {
+            color: var(--color-great);
+        }
+
+        .price-value.overpay {
+            color: var(--color-high);
+        }
+
+        .alternatives-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-gray-900);
+            margin-bottom: 12px;
+        }
+
+        .alt-card {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 12px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .alt-info h4 {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--color-gray-900);
+        }
+
+        .alt-info p {
+            font-size: 12px;
+            color: var(--color-gray-500);
+        }
+
+        .alt-price {
+            text-align: right;
+        }
+
+        .alt-price .price {
+            font-weight: 600;
+            color: var(--color-gray-900);
+        }
+
+        .alt-price .savings {
+            font-size: 12px;
+            color: var(--color-great);
+        }
+
+        .cta-section {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--color-gray-100);
+        }
+
+        .cta-section h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--color-gray-900);
+            margin-bottom: 8px;
+        }
+
+        .cta-section p {
+            color: var(--color-gray-500);
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--color-gray-200);
+            border-top-color: var(--color-accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .back-link:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <img src="logo-agi-dogcar-v1.jpg" alt="Agi" class="logo">
+                <h1>Is This a Good Deal?</h1>
+                <p>Paste a vehicle link and Agi will analyze it for you</p>
+            </div>
+
+            <div class="content" id="input-section">
+                <div class="input-group">
+                    <label class="input-label">Vehicle Link</label>
+                    <input type="url" class="input-field" id="vehicle-url" 
+                           placeholder="Paste Cars.com, Autotrader, or CarGurus link...">
+                </div>
+                <button class="btn" id="analyze-btn" onclick="analyzeVehicle()">
+                    <i data-lucide="search" style="width: 20px; height: 20px;"></i>
+                    Analyze This Deal
+                </button>
+                <div class="supported-sites">
+                    <span>✓ Cars.com</span>
+                    <span>✓ Autotrader</span>
+                    <span>✓ CarGurus</span>
+                </div>
+            </div>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Agi is sniffing out the details...</p>
+            </div>
+
+            <div class="results" id="results">
+                <!-- Populated dynamically -->
+            </div>
+        </div>
+
+        <a href="/" class="back-link">← Back to home</a>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        async function analyzeVehicle() {
+            const url = document.getElementById('vehicle-url').value.trim();
+            if (!url) {
+                alert('Please paste a vehicle link');
+                return;
+            }
+
+            // Validate URL
+            const validDomains = ['cars.com', 'autotrader.com', 'cargurus.com'];
+            const isValid = validDomains.some(d => url.includes(d));
+            if (!isValid) {
+                alert('Please paste a link from Cars.com, Autotrader, or CarGurus');
+                return;
+            }
+
+            // Show loading
+            document.getElementById('input-section').style.display = 'none';
+            document.getElementById('loading').classList.add('show');
+            document.getElementById('results').classList.remove('show');
+
+            // Simulate analysis (in production, this calls backend)
+            setTimeout(() => {
+                showResults(url);
+            }, 2000);
+        }
+
+        function showResults(url) {
+            document.getElementById('loading').classList.remove('show');
+            
+            // Demo data - in production, this comes from backend analysis
+            const vehicle = {
+                title: '2023 Toyota RAV4 XLE',
+                price: 28500,
+                mileage: '32,450',
+                dealer: 'Hendrick Toyota',
+                location: 'North Charleston, SC',
+                deal: 'good', // great, good, fair, high
+                marketPrice: 29200,
+                belowMarket: 700
+            };
+
+            const alternatives = [
+                { title: '2023 Toyota RAV4 XLE', mileage: '28,100 mi', price: 27200, dealer: 'Fred Anderson Toyota', savings: 1300 },
+                { title: '2022 Toyota RAV4 XLE', mileage: '35,600 mi', price: 25900, dealer: 'Rick Hendrick', savings: 2600 },
+                { title: '2023 Toyota RAV4 LE', mileage: '29,000 mi', price: 24500, dealer: 'Hudson Nissan', savings: 4000 }
+            ];
+
+            const dealLabels = {
+                great: { text: 'Great Deal', class: 'deal-great', icon: '🔥' },
+                good: { text: 'Good Deal', class: 'deal-good', icon: '👍' },
+                fair: { text: 'Fair Price', class: 'deal-fair', icon: '😐' },
+                high: { text: 'High Price', class: 'deal-high', icon: '⚠️' }
+            };
+
+            const deal = dealLabels[vehicle.deal];
+
+            document.getElementById('results').innerHTML = `
+                <div class="vehicle-card">
+                    <div class="vehicle-header">
+                        <div>
+                            <div class="vehicle-title">${vehicle.title}</div>
+                            <span class="deal-badge ${deal.class}">${deal.icon} ${deal.text}</span>
+                        </div>
+                        <div class="vehicle-price">$${vehicle.price.toLocaleString()}</div>
+                    </div>
+                    <div class="vehicle-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Mileage:</span>
+                            <span class="detail-value">${vehicle.mileage} mi</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Dealer:</span>
+                            <span class="detail-value">${vehicle.dealer}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Location:</span>
+                            <span class="detail-value">${vehicle.location}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="price-analysis">
+                    <div class="price-row">
+                        <span class="price-label">Asking Price</span>
+                        <span class="price-value">$${vehicle.price.toLocaleString()}</span>
+                    </div>
+                    <div class="price-row">
+                        <span class="price-label">Market Average</span>
+                        <span class="price-value">$${vehicle.marketPrice.toLocaleString()}</span>
+                    </div>
+                    <div class="price-row">
+                        <span class="price-label">vs Market</span>
+                        <span class="price-value ${vehicle.belowMarket > 0 ? 'savings' : 'overpay'}">
+                            ${vehicle.belowMarket > 0 ? '↓' : '↑'} $${Math.abs(vehicle.belowMarket).toLocaleString()} ${vehicle.belowMarket > 0 ? 'below' : 'above'}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="alternatives-title">🔍 Similar Vehicles Nearby</div>
+                ${alternatives.map(alt => `
+                    <div class="alt-card">
+                        <div class="alt-info">
+                            <h4>${alt.title}</h4>
+                            <p>${alt.mileage} • ${alt.dealer}</p>
+                        </div>
+                        <div class="alt-price">
+                            <div class="price">$${alt.price.toLocaleString()}</div>
+                            <div class="savings">Save $${alt.savings.toLocaleString()}</div>
+                        </div>
+                    </div>
+                `).join('')}
+
+                <div class="cta-section">
+                    <h3>Want us to negotiate?</h3>
+                    <p>We'll contact dealers and get you the best possible price on any of these vehicles.</p>
+                    <button class="btn" onclick="startNegotiation()">
+                        <i data-lucide="handshake" style="width: 20px; height: 20px;"></i>
+                        Get Me the Best Deal
+                    </button>
+                </div>
+            `;
+
+            document.getElementById('results').classList.add('show');
+            lucide.createIcons();
+        }
+
+        function startNegotiation() {
+            // Save vehicle to localStorage for intake
+            localStorage.setItem('agi_analyzed_vehicle', JSON.stringify({
+                url: document.getElementById('vehicle-url').value,
+                analyzed_at: new Date().toISOString()
+            }));
+            
+            // Redirect to intake with context
+            window.location.href = '/start.html?from=analyze';
+        }
+
+        // Handle enter key
+        document.getElementById('vehicle-url').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') analyzeVehicle();
+        });
+    </script>
+</body>
+</html>
