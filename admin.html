@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard — DealershipAGI</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    
+    <style>
+        :root {
+            --color-primary: #064E3B;
+            --color-primary-light: #065F46;
+            --color-accent: #10B981;
+            --color-accent-hover: #059669;
+            --color-accent-light: #D1FAE5;
+            --color-white: #FFFFFF;
+            --color-gray-50: #F9FAFB;
+            --color-gray-100: #F3F4F6;
+            --color-gray-200: #E5E7EB;
+            --color-gray-300: #D1D5DB;
+            --color-gray-400: #9CA3AF;
+            --color-gray-500: #6B7280;
+            --color-gray-600: #4B5563;
+            --color-gray-700: #374151;
+            --color-gray-800: #1F2937;
+            --color-gray-900: #111827;
+            --color-warning: #F59E0B;
+            --color-warning-light: #FEF3C7;
+            --color-error: #EF4444;
+            --color-error-light: #FEE2E2;
+            
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --radius-sm: 6px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+            --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-sans);
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--color-gray-700);
+            background: var(--color-gray-100);
+            min-height: 100vh;
+        }
+
+        /* ===== Sidebar ===== */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 240px;
+            background: var(--color-primary);
+            color: white;
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 24px;
+        }
+
+        .sidebar-logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+        }
+
+        .sidebar-logo span {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            margin-bottom: 4px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        .nav-item.active {
+            background: var(--color-accent);
+        }
+
+        .nav-badge {
+            margin-left: auto;
+            background: var(--color-error);
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+
+        /* ===== Main Content ===== */
+        .main {
+            margin-left: 240px;
+            padding: 24px;
+            min-height: 100vh;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--color-gray-900);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        /* ===== Buttons ===== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: var(--radius-md);
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--color-accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--color-accent-hover);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--color-gray-700);
+            border: 1px solid var(--color-gray-300);
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-gray-50);
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 13px;
+        }
+
+        /* ===== Stats Cards ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--color-gray-500);
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--color-gray-900);
+        }
+
+        .stat-change {
+            font-size: 12px;
+            color: var(--color-accent);
+            margin-top: 4px;
+        }
+
+        /* ===== Table ===== */
+        .card {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--color-gray-100);
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-gray-900);
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th {
+            text-align: left;
+            padding: 12px 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--color-gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            background: var(--color-gray-50);
+            border-bottom: 1px solid var(--color-gray-200);
+        }
+
+        .table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--color-gray-100);
+            vertical-align: middle;
+        }
+
+        .table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .table tr:hover {
+            background: var(--color-gray-50);
+        }
+
+        .table tr {
+            cursor: pointer;
+        }
+
+        /* ===== Status Badges ===== */
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-new {
+            background: var(--color-accent-light);
+            color: var(--color-accent-hover);
+        }
+
+        .status-searching {
+            background: #DBEAFE;
+            color: #2563EB;
+        }
+
+        .status-presented {
+            background: #E9D5FF;
+            color: #7C3AED;
+        }
+
+        .status-negotiating {
+            background: var(--color-warning-light);
+            color: #D97706;
+        }
+
+        .status-won {
+            background: var(--color-accent-light);
+            color: var(--color-primary);
+        }
+
+        .status-lost {
+            background: var(--color-gray-200);
+            color: var(--color-gray-600);
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        /* ===== Lead Details Modal ===== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: white;
+            border-radius: var(--radius-lg);
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(20px);
+            transition: transform 0.2s;
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--color-gray-200);
+        }
+
+        .modal-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--color-gray-900);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--color-gray-400);
+            cursor: pointer;
+            padding: 4px;
+            border-radius: var(--radius-sm);
+        }
+
+        .modal-close:hover {
+            background: var(--color-gray-100);
+            color: var(--color-gray-700);
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .detail-group {
+            margin-bottom: 20px;
+        }
+
+        .detail-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--color-gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+        }
+
+        .detail-value {
+            font-size: 14px;
+            color: var(--color-gray-900);
+        }
+
+        .detail-section {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--color-gray-200);
+        }
+
+        .detail-section h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-gray-900);
+            margin-bottom: 16px;
+        }
+
+        /* ===== Vehicle Cards ===== */
+        .vehicles-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .vehicle-card {
+            border: 1px solid var(--color-gray-200);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+
+        .vehicle-image {
+            height: 120px;
+            background: var(--color-gray-200);
+            background-size: cover;
+            background-position: center;
+        }
+
+        .vehicle-info {
+            padding: 12px;
+        }
+
+        .vehicle-title {
+            font-weight: 600;
+            color: var(--color-gray-900);
+            margin-bottom: 4px;
+        }
+
+        .vehicle-price {
+            color: var(--color-accent);
+            font-weight: 600;
+        }
+
+        .vehicle-meta {
+            font-size: 12px;
+            color: var(--color-gray-500);
+            margin-top: 4px;
+        }
+
+        /* ===== Add Vehicle Form ===== */
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--color-gray-700);
+            margin-bottom: 6px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--color-gray-300);
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-accent);
+        }
+
+        .form-textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        /* ===== Status Select ===== */
+        .status-select {
+            padding: 6px 12px;
+            border: 1px solid var(--color-gray-300);
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: 13px;
+            background: white;
+            cursor: pointer;
+        }
+
+        /* ===== Empty State ===== */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--color-gray-500);
+        }
+
+        .empty-state-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--color-gray-100);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            color: var(--color-gray-400);
+        }
+
+        .empty-state h3 {
+            color: var(--color-gray-900);
+            margin-bottom: 8px;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                position: relative;
+                padding: 16px;
+            }
+            .main {
+                margin-left: 0;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .detail-grid, .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <img src="logo-agi-dogcar-v1.jpg" alt="Agi">
+            <span>DealershipAGI</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a class="nav-item active" data-view="leads">
+                <i data-lucide="inbox" style="width: 20px; height: 20px;"></i>
+                Leads
+                <span class="nav-badge" id="new-leads-count">0</span>
+            </a>
+            <a class="nav-item" data-view="deals">
+                <i data-lucide="handshake" style="width: 20px; height: 20px;"></i>
+                Active Deals
+            </a>
+            <a class="nav-item" data-view="inventory">
+                <i data-lucide="car" style="width: 20px; height: 20px;"></i>
+                Inventory
+            </a>
+            <a class="nav-item" data-view="analytics">
+                <i data-lucide="bar-chart-3" style="width: 20px; height: 20px;"></i>
+                Analytics
+            </a>
+        </nav>
+        <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px;">
+            <a class="nav-item" href="/" target="_blank">
+                <i data-lucide="external-link" style="width: 20px; height: 20px;"></i>
+                View Site
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="header">
+            <h1>Leads</h1>
+            <div class="header-actions">
+                <button class="btn btn-secondary" onclick="refreshLeads()">
+                    <i data-lucide="refresh-cw" style="width: 16px; height: 16px;"></i>
+                    Refresh
+                </button>
+                <button class="btn btn-primary" onclick="addTestLead()">
+                    <i data-lucide="plus" style="width: 16px; height: 16px;"></i>
+                    Add Test Lead
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">New Leads</div>
+                <div class="stat-value" id="stat-new">0</div>
+                <div class="stat-change">Awaiting action</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">In Progress</div>
+                <div class="stat-value" id="stat-progress">0</div>
+                <div class="stat-change">Searching / Negotiating</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Deals Closed</div>
+                <div class="stat-value" id="stat-closed">0</div>
+                <div class="stat-change">This month</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Conversion Rate</div>
+                <div class="stat-value" id="stat-conversion">0%</div>
+                <div class="stat-change">Lead → Deal</div>
+            </div>
+        </div>
+
+        <!-- Leads Table -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">All Leads</span>
+                <div style="display: flex; gap: 12px;">
+                    <select class="status-select" id="filter-status" onchange="filterLeads()">
+                        <option value="all">All Statuses</option>
+                        <option value="new">New</option>
+                        <option value="searching">Searching</option>
+                        <option value="presented">Presented</option>
+                        <option value="negotiating">Negotiating</option>
+                        <option value="won">Won</option>
+                        <option value="lost">Lost</option>
+                    </select>
+                </div>
+            </div>
+            <table class="table" id="leads-table">
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Looking For</th>
+                        <th>Budget</th>
+                        <th>Timeline</th>
+                        <th>Status</th>
+                        <th>Submitted</th>
+                    </tr>
+                </thead>
+                <tbody id="leads-body">
+                    <!-- Leads populated here -->
+                </tbody>
+            </table>
+            <div class="empty-state" id="empty-state" style="display: none;">
+                <div class="empty-state-icon">
+                    <i data-lucide="inbox" style="width: 32px; height: 32px;"></i>
+                </div>
+                <h3>No leads yet</h3>
+                <p>Leads from the intake chat will appear here.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Lead Detail Modal -->
+    <div class="modal-overlay" id="lead-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modal-title">Lead Details</h2>
+                <button class="modal-close" onclick="closeModal()">
+                    <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Content populated dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        // ===== State =====
+        let leads = [];
+        let currentLeadIndex = null;
+
+        // ===== Initialize =====
+        function init() {
+            loadLeads();
+            updateStats();
+            renderLeads();
+        }
+
+        function loadLeads() {
+            leads = JSON.parse(localStorage.getItem('agi_leads') || '[]');
+        }
+
+        function saveLeads() {
+            localStorage.setItem('agi_leads', JSON.stringify(leads));
+        }
+
+        // ===== Stats =====
+        function updateStats() {
+            const newCount = leads.filter(l => l.status === 'new').length;
+            const progressCount = leads.filter(l => ['searching', 'presented', 'negotiating'].includes(l.status)).length;
+            const closedCount = leads.filter(l => l.status === 'won').length;
+            const totalLeads = leads.length;
+            const conversionRate = totalLeads > 0 ? Math.round((closedCount / totalLeads) * 100) : 0;
+
+            document.getElementById('stat-new').textContent = newCount;
+            document.getElementById('stat-progress').textContent = progressCount;
+            document.getElementById('stat-closed').textContent = closedCount;
+            document.getElementById('stat-conversion').textContent = conversionRate + '%';
+            document.getElementById('new-leads-count').textContent = newCount;
+        }
+
+        // ===== Render Leads =====
+        function renderLeads(filter = 'all') {
+            const tbody = document.getElementById('leads-body');
+            const emptyState = document.getElementById('empty-state');
+            const table = document.getElementById('leads-table');
+
+            const filteredLeads = filter === 'all' 
+                ? leads 
+                : leads.filter(l => l.status === filter);
+
+            if (filteredLeads.length === 0) {
+                table.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            table.style.display = 'table';
+            emptyState.style.display = 'none';
+
+            tbody.innerHTML = filteredLeads.map((lead, index) => {
+                const actualIndex = leads.indexOf(lead);
+                const vehicleType = lead.vehicle_type || 'Not specified';
+                const budget = lead.budget_amount || 'Not specified';
+                const timeline = lead.timeline || 'Not specified';
+                const status = lead.status || 'new';
+                const submitted = lead.submitted_at ? formatDate(lead.submitted_at) : 'Unknown';
+
+                return `
+                    <tr onclick="openLead(${actualIndex})">
+                        <td>
+                            <div style="font-weight: 500; color: var(--color-gray-900);">${lead.first_name || 'Unknown'}</div>
+                            <div style="font-size: 12px; color: var(--color-gray-500);">${lead.email || ''}</div>
+                        </td>
+                        <td>
+                            <div>${vehicleType}</div>
+                            <div style="font-size: 12px; color: var(--color-gray-500);">${lead.target_vehicle || lead.condition || ''}</div>
+                        </td>
+                        <td>${budget}</td>
+                        <td>${timeline}</td>
+                        <td><span class="status status-${status}"><span class="status-dot"></span>${capitalizeFirst(status)}</span></td>
+                        <td style="color: var(--color-gray-500);">${submitted}</td>
+                    </tr>
+                `;
+            }).join('');
+
+            lucide.createIcons();
+        }
+
+        // ===== Open Lead Modal =====
+        function openLead(index) {
+            currentLeadIndex = index;
+            const lead = leads[index];
+            
+            document.getElementById('modal-title').textContent = `${lead.first_name || 'Lead'} — ${lead.vehicle_type || 'Vehicle'}`;
+            
+            document.getElementById('modal-body').innerHTML = `
+                <div class="detail-grid">
+                    <div>
+                        <div class="detail-group">
+                            <div class="detail-label">Customer Name</div>
+                            <div class="detail-value">${lead.first_name || 'Not provided'}</div>
+                        </div>
+                        <div class="detail-group">
+                            <div class="detail-label">Email</div>
+                            <div class="detail-value">${lead.email || 'Not provided'}</div>
+                        </div>
+                        <div class="detail-group">
+                            <div class="detail-label">Phone</div>
+                            <div class="detail-value">${lead.phone || 'Not provided'}</div>
+                        </div>
+                        <div class="detail-group">
+                            <div class="detail-label">Location</div>
+                            <div class="detail-value">${lead.zip_code || 'Not provided'}</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="detail-group">
+                            <div class="detail-label">Vehicle Type</div>
+                            <div class="detail-value">${lead.vehicle_type || 'Not specified'}</div>
+                        </div>
+                        <div class="detail-group">
+                            <div class="detail-label">Specific Vehicle</div>
+                            <div class="detail-value">${lead.target_vehicle || 'Open to suggestions'}</div>
+                        </div>
+                        <div class="detail-group">
+                            <div class="detail-label">Condition</div>
+                            <div class="detail-value">${lead.condition || 'Not specified'}</div>
+                        </div>
+                        <div class="detail-group">
+                            <div class="detail-label">Budget</div>
+                            <div class="detail-value">${lead.budget_type || ''} — ${lead.budget_amount || 'Not specified'}</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="detail-grid">
+                    <div class="detail-group">
+                        <div class="detail-label">Must-Have Features</div>
+                        <div class="detail-value">${lead.features || 'None specified'}</div>
+                    </div>
+                    <div class="detail-group">
+                        <div class="detail-label">Dealbreakers</div>
+                        <div class="detail-value">${lead.dealbreakers || 'None specified'}</div>
+                    </div>
+                </div>
+                
+                <div class="detail-grid">
+                    <div class="detail-group">
+                        <div class="detail-label">Timeline</div>
+                        <div class="detail-value">${lead.timeline || 'Not specified'}</div>
+                    </div>
+                    <div class="detail-group">
+                        <div class="detail-label">Trade-In</div>
+                        <div class="detail-value">${lead.trade_in || 'No'} ${lead.trade_in_vehicle ? '— ' + lead.trade_in_vehicle : ''}</div>
+                    </div>
+                </div>
+                
+                <div class="detail-section">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h3>Status</h3>
+                        <select class="status-select" id="lead-status" onchange="updateLeadStatus(${index}, this.value)">
+                            <option value="new" ${lead.status === 'new' ? 'selected' : ''}>New</option>
+                            <option value="searching" ${lead.status === 'searching' ? 'selected' : ''}>Searching</option>
+                            <option value="presented" ${lead.status === 'presented' ? 'selected' : ''}>Presented</option>
+                            <option value="negotiating" ${lead.status === 'negotiating' ? 'selected' : ''}>Negotiating</option>
+                            <option value="won" ${lead.status === 'won' ? 'selected' : ''}>Won</option>
+                            <option value="lost" ${lead.status === 'lost' ? 'selected' : ''}>Lost</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="detail-section">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h3>Vehicle Candidates</h3>
+                        <button class="btn btn-sm btn-primary" onclick="showAddVehicleForm(${index})">
+                            <i data-lucide="plus" style="width: 14px; height: 14px;"></i>
+                            Add Vehicle
+                        </button>
+                    </div>
+                    <div class="vehicles-grid" id="vehicles-grid-${index}">
+                        ${(lead.vehicles || []).map((v, vi) => `
+                            <div class="vehicle-card">
+                                <div class="vehicle-image" style="background-image: url('${v.image || ''}')"></div>
+                                <div class="vehicle-info">
+                                    <div class="vehicle-title">${v.year} ${v.make} ${v.model}</div>
+                                    <div class="vehicle-price">$${Number(v.price).toLocaleString()}</div>
+                                    <div class="vehicle-meta">${v.mileage ? v.mileage.toLocaleString() + ' miles' : 'New'} • ${v.dealer || 'Unknown dealer'}</div>
+                                </div>
+                            </div>
+                        `).join('') || '<p style="color: var(--color-gray-500); grid-column: 1/-1;">No vehicles added yet.</p>'}
+                    </div>
+                </div>
+                
+                <div class="detail-section">
+                    <h3>Notes</h3>
+                    <textarea class="form-input form-textarea" placeholder="Add notes about this lead..." onchange="updateLeadNotes(${index}, this.value)">${lead.notes || ''}</textarea>
+                </div>
+                
+                <div style="margin-top: 24px; display: flex; gap: 12px;">
+                    <button class="btn btn-primary" onclick="contactLead(${index})">
+                        <i data-lucide="mail" style="width: 16px; height: 16px;"></i>
+                        Send Email
+                    </button>
+                    <button class="btn btn-secondary" onclick="callLead(${index})">
+                        <i data-lucide="phone" style="width: 16px; height: 16px;"></i>
+                        Call
+                    </button>
+                </div>
+            `;
+
+            document.getElementById('lead-modal').classList.add('active');
+            lucide.createIcons();
+        }
+
+        function closeModal() {
+            document.getElementById('lead-modal').classList.remove('active');
+            currentLeadIndex = null;
+        }
+
+        // ===== Lead Actions =====
+        function updateLeadStatus(index, status) {
+            leads[index].status = status;
+            saveLeads();
+            updateStats();
+            renderLeads(document.getElementById('filter-status').value);
+        }
+
+        function updateLeadNotes(index, notes) {
+            leads[index].notes = notes;
+            saveLeads();
+        }
+
+        function contactLead(index) {
+            const lead = leads[index];
+            window.location.href = `mailto:${lead.email}?subject=Your Car Search with DealershipAGI&body=Hi ${lead.first_name},%0D%0A%0D%0A`;
+        }
+
+        function callLead(index) {
+            const lead = leads[index];
+            if (lead.phone) {
+                window.location.href = `tel:${lead.phone}`;
+            }
+        }
+
+        function showAddVehicleForm(leadIndex) {
+            const vehiclesGrid = document.getElementById(`vehicles-grid-${leadIndex}`);
+            vehiclesGrid.innerHTML = `
+                <div style="grid-column: 1/-1; padding: 16px; border: 1px solid var(--color-gray-200); border-radius: var(--radius-md);">
+                    <h4 style="margin-bottom: 16px; color: var(--color-gray-900);">Add Vehicle Candidate</h4>
+                    <div class="form-row">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label">Year</label>
+                            <input type="text" class="form-input" id="v-year" placeholder="2024">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label">Make</label>
+                            <input type="text" class="form-input" id="v-make" placeholder="Honda">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label">Model</label>
+                            <input type="text" class="form-input" id="v-model" placeholder="Accord">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label">Price</label>
+                            <input type="text" class="form-input" id="v-price" placeholder="32000">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label">Mileage</label>
+                            <input type="text" class="form-input" id="v-mileage" placeholder="0 for new">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label">Dealer</label>
+                            <input type="text" class="form-input" id="v-dealer" placeholder="Dealer name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Image URL</label>
+                        <input type="text" class="form-input" id="v-image" placeholder="https://...">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Listing URL</label>
+                        <input type="text" class="form-input" id="v-url" placeholder="https://...">
+                    </div>
+                    <div style="display: flex; gap: 12px; margin-top: 16px;">
+                        <button class="btn btn-primary" onclick="addVehicle(${leadIndex})">Add Vehicle</button>
+                        <button class="btn btn-secondary" onclick="openLead(${leadIndex})">Cancel</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function addVehicle(leadIndex) {
+            const vehicle = {
+                year: document.getElementById('v-year').value,
+                make: document.getElementById('v-make').value,
+                model: document.getElementById('v-model').value,
+                price: document.getElementById('v-price').value,
+                mileage: document.getElementById('v-mileage').value,
+                dealer: document.getElementById('v-dealer').value,
+                image: document.getElementById('v-image').value,
+                url: document.getElementById('v-url').value,
+                added_at: new Date().toISOString()
+            };
+
+            if (!leads[leadIndex].vehicles) {
+                leads[leadIndex].vehicles = [];
+            }
+            leads[leadIndex].vehicles.push(vehicle);
+            saveLeads();
+            openLead(leadIndex);
+        }
+
+        // ===== Filters =====
+        function filterLeads() {
+            const status = document.getElementById('filter-status').value;
+            renderLeads(status);
+        }
+
+        function refreshLeads() {
+            loadLeads();
+            updateStats();
+            renderLeads(document.getElementById('filter-status').value);
+        }
+
+        // ===== Test Data =====
+        function addTestLead() {
+            const testLead = {
+                first_name: 'Test User',
+                email: 'test@example.com',
+                phone: '843-555-1234',
+                zip_code: '29401',
+                vehicle_type: '🚙 SUV / Crossover',
+                model_preference: 'I know what I want',
+                target_vehicle: 'Toyota RAV4',
+                condition: 'New only',
+                budget_type: '💳 Financing / Monthly',
+                budget_amount: '$500 - $700/mo',
+                features: 'AWD / 4WD, Apple CarPlay, Safety tech',
+                dealbreakers: 'High mileage',
+                timeline: 'Within 2 weeks',
+                trade_in: 'Yes, I have a trade-in',
+                trade_in_vehicle: '2019 Honda Civic, 45k miles',
+                status: 'new',
+                submitted_at: new Date().toISOString(),
+                vehicles: []
+            };
+            leads.push(testLead);
+            saveLeads();
+            updateStats();
+            renderLeads();
+        }
+
+        // ===== Utilities =====
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            const now = new Date();
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+            const diffDays = Math.floor(diffMs / 86400000);
+
+            if (diffMins < 60) return `${diffMins}m ago`;
+            if (diffHours < 24) return `${diffHours}h ago`;
+            if (diffDays < 7) return `${diffDays}d ago`;
+            return date.toLocaleDateString();
+        }
+
+        function capitalizeFirst(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        // Close modal on overlay click
+        document.getElementById('lead-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'lead-modal') closeModal();
+        });
+
+        // Initialize
+        init();
+    </script>
+</body>
+</html>
