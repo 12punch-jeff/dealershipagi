@@ -325,7 +325,7 @@
 
         /* ===== How It Works ===== */
         .section {
-            padding: var(--space-20) 0;
+            padding: var(--space-12) 0;
         }
 
         .section-gray {
@@ -335,7 +335,7 @@
         .section-header {
             text-align: center;
             max-width: 600px;
-            margin: 0 auto var(--space-12);
+            margin: 0 auto var(--space-8);
         }
 
         .section-header p {
@@ -346,13 +346,13 @@
 
         .steps {
             display: grid;
-            gap: var(--space-8);
+            gap: var(--space-6);
         }
 
         @media (min-width: 768px) {
             .steps {
                 grid-template-columns: repeat(3, 1fr);
-                gap: var(--space-10);
+                gap: var(--space-6);
             }
         }
 
@@ -361,38 +361,39 @@
         }
 
         .step-icon {
-            width: 64px;
-            height: 64px;
+            width: 52px;
+            height: 52px;
             background: var(--color-accent-light);
             border-radius: var(--radius-lg);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto var(--space-5);
+            margin: 0 auto var(--space-3);
             color: var(--color-accent);
         }
 
         .step-number {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
             color: var(--color-accent);
             letter-spacing: 0.1em;
-            margin-bottom: var(--space-2);
+            margin-bottom: var(--space-1);
         }
 
         .step h3 {
-            margin-bottom: var(--space-3);
+            margin-bottom: var(--space-2);
+            font-size: 18px;
         }
 
         .step p {
             color: var(--color-gray-500);
-            font-size: 15px;
+            font-size: 14px;
         }
 
         /* ===== Why Us ===== */
         .features {
             display: grid;
-            gap: var(--space-6);
+            gap: var(--space-4);
         }
 
         @media (min-width: 640px) {
@@ -408,37 +409,38 @@
         }
 
         .feature {
-            padding: var(--space-6);
+            padding: var(--space-4);
             background: var(--color-white);
             border-radius: var(--radius-lg);
             border: 1px solid var(--color-gray-100);
         }
 
         .feature-icon {
-            width: 48px;
-            height: 48px;
+            width: 40px;
+            height: 40px;
             background: var(--color-accent-light);
             border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: var(--space-4);
+            margin-bottom: var(--space-3);
             color: var(--color-accent);
         }
 
         .feature h4 {
-            margin-bottom: var(--space-2);
+            margin-bottom: var(--space-1);
+            font-size: 16px;
         }
 
         .feature p {
             color: var(--color-gray-500);
-            font-size: 14px;
+            font-size: 13px;
         }
 
         /* ===== Testimonials ===== */
         .testimonials {
             display: grid;
-            gap: var(--space-6);
+            gap: var(--space-4);
         }
 
         @media (min-width: 768px) {
@@ -448,17 +450,17 @@
         }
 
         .testimonial {
-            padding: var(--space-6);
+            padding: var(--space-4);
             background: var(--color-white);
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-md);
         }
 
         .testimonial-quote {
-            font-size: 15px;
+            font-size: 14px;
             font-style: italic;
             color: var(--color-gray-700);
-            margin-bottom: var(--space-4);
+            margin-bottom: var(--space-3);
         }
 
         .testimonial-author {
@@ -779,12 +781,12 @@
     </section>
 
     <!-- Agi Searching Visual Break -->
-    <section style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%); padding: var(--space-12) 0; text-align: center; position: relative; overflow: hidden;">
-        <div class="container" style="display: flex; flex-direction: column; align-items: center; gap: var(--space-6);">
-            <img src="images/agi-searching.jpg" alt="Agi searching for car deals" style="max-width: 320px; border-radius: var(--radius-lg); box-shadow: 0 20px 40px rgba(0,0,0,0.3); transform: rotate(-2deg);">
+    <section style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%); padding: var(--space-8) 0; text-align: center; position: relative; overflow: hidden;">
+        <div class="container" style="display: flex; flex-direction: column; align-items: center; gap: var(--space-4);">
+            <img src="images/agi-searching.jpg" alt="Agi searching for car deals" style="max-width: 260px; border-radius: var(--radius-lg); box-shadow: 0 20px 40px rgba(0,0,0,0.3); transform: rotate(-2deg);">
             <div style="color: white; max-width: 500px;">
-                <h3 style="color: white; font-size: 24px; margin-bottom: var(--space-2);">🔍 Agi's on the hunt</h3>
-                <p style="color: rgba(255,255,255,0.85); margin: 0; font-size: 16px;">While you relax, Agi digs through thousands of listings to find your perfect match.</p>
+                <h3 style="color: white; font-size: 20px; margin-bottom: var(--space-1);">🔍 Agi's on the hunt</h3>
+                <p style="color: rgba(255,255,255,0.85); margin: 0; font-size: 14px;">While you relax, Agi digs through thousands of listings to find your perfect match.</p>
             </div>
         </div>
     </section>
@@ -997,17 +999,16 @@
     </section>
 
     <!-- Agi Promise Banner -->
-    <section style="background: var(--color-accent-light); padding: var(--space-10) 0; border-top: 3px solid var(--color-accent); border-bottom: 3px solid var(--color-accent);">
-        <div class="container" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--space-8); text-align: center;">
-            <div style="font-size: 48px;">🐕</div>
-            <div style="max-width: 600px;">
-                <h3 style="color: var(--color-primary); margin-bottom: var(--space-2);">The Agi Promise</h3>
-                <p style="color: var(--color-gray-700); margin: 0; font-size: 16px;">
+    <section style="background: var(--color-accent-light); padding: var(--space-6) 0; border-top: 2px solid var(--color-accent); border-bottom: 2px solid var(--color-accent);">
+        <div class="container" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--space-4); text-align: center;">
+            <div style="font-size: 36px;">🐕</div>
+            <div style="max-width: 550px;">
+                <h3 style="color: var(--color-primary); margin-bottom: var(--space-1); font-size: 18px;">The Agi Promise</h3>
+                <p style="color: var(--color-gray-700); margin: 0; font-size: 14px;">
                     <strong>No spam. No pressure. No tricks.</strong> Just a good boy finding you a good deal.
-                    If we can't save you money, we'll tell you — and you'll walk away with market knowledge most buyers never get.
                 </p>
             </div>
-            <div style="font-size: 48px;">🚗</div>
+            <div style="font-size: 36px;">🚗</div>
         </div>
     </section>
 
