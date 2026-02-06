@@ -525,57 +525,57 @@
         const conversation = [
             {
                 id: 'welcome',
-                message: "Hey there! I'm Agi 🐕\n\nI help people find great deals on cars without the dealership headaches. Tell me what you're looking for, and I'll fetch the best options.\n\nReady to get started?",
-                quickReplies: ["Let's do it!", "How does this work?"],
+                message: "*wags tail* 🐕\n\nHey! I'm Agi — your car-hunting companion!\n\nI sniff out the best deals so you don't have to deal with pushy salespeople. Tell me what you're after and I'll fetch some great options.\n\nShall we find you a ride?",
+                quickReplies: ["Let's go! 🚗", "Wait, how does this work?"],
                 progress: { step: "Let's find your car", percent: 5 }
             },
             {
                 id: 'vehicle_type',
-                message: "Awesome! What type of vehicle are you looking for?",
+                message: "*ears perk up* 👂\n\nOoh exciting! What kind of vehicle are we hunting for?",
                 quickReplies: ["🚗 Car / Sedan", "🚙 SUV / Crossover", "🛻 Truck", "🚐 Van / Minivan", "🤷 Not sure yet"],
                 field: 'vehicle_type',
                 progress: { step: "Vehicle type", percent: 15 }
             },
             {
                 id: 'specific_model',
-                message: "Do you have a specific make or model in mind? Or are you open to suggestions?",
-                quickReplies: ["I know what I want", "Open to suggestions", "I have a few in mind"],
+                message: "Got it! Do you have a specific make or model in mind, or should I show you what's out there?",
+                quickReplies: ["I know exactly what I want", "Show me options", "I've got a few in mind"],
                 field: 'model_preference',
                 progress: { step: "Vehicle details", percent: 22 }
             },
             {
                 id: 'specific_model_input',
-                message: "Great! What make/model are you looking for? (e.g., Honda Accord, Toyota RAV4)",
+                message: "*sits attentively* 🐕\n\nTell me! What make and model? (like \"Honda Accord\" or \"Toyota RAV4\")",
                 inputOnly: true,
                 field: 'target_vehicle',
-                condition: (data) => data.model_preference === 'I know what I want' || data.model_preference === 'I have a few in mind',
+                condition: (data) => data.model_preference === 'I know exactly what I want' || data.model_preference === 'I\'ve got a few in mind',
                 progress: { step: "Vehicle details", percent: 28 }
             },
             {
                 id: 'condition',
-                message: "Are you looking for new or used?",
+                message: "Nice choice! Are we looking at new, used, or you don't mind either way?",
                 quickReplies: ["New only", "Used is great", "Certified Pre-Owned", "Either works"],
                 field: 'condition',
                 progress: { step: "New or used", percent: 35 }
             },
             {
                 id: 'budget_type',
-                message: "How are you planning to pay for it?",
-                quickReplies: ["💳 Financing / Monthly", "💵 Cash / Full price", "Not sure yet"],
+                message: "*tilts head* 🐕\n\nNow for the money talk — how are you planning to pay?",
+                quickReplies: ["💳 Monthly payments", "💵 Cash / Full price", "Not sure yet"],
                 field: 'budget_type',
                 progress: { step: "Budget", percent: 42 }
             },
             {
                 id: 'budget_monthly',
-                message: "What monthly payment range works for your budget?",
+                message: "What monthly payment feels comfortable? I'll make sure we stay in your zone.",
                 quickReplies: ["Under $300/mo", "$300 - $500/mo", "$500 - $700/mo", "$700 - $1000/mo", "$1000+/mo"],
                 field: 'budget_amount',
-                condition: (data) => data.budget_type === '💳 Financing / Monthly',
+                condition: (data) => data.budget_type === '💳 Monthly payments',
                 progress: { step: "Budget", percent: 50 }
             },
             {
                 id: 'budget_cash',
-                message: "What's your target price range?",
+                message: "What's your budget range? I'll hunt within these limits.",
                 quickReplies: ["Under $20k", "$20k - $35k", "$35k - $50k", "$50k - $75k", "$75k+"],
                 field: 'budget_amount',
                 condition: (data) => data.budget_type === '💵 Cash / Full price' || data.budget_type === 'Not sure yet',
@@ -583,93 +583,93 @@
             },
             {
                 id: 'features',
-                message: "Any must-have features? Tap all that apply:",
-                quickReplies: ["AWD / 4WD", "Leather seats", "Sunroof", "3rd row seating", "Apple CarPlay", "Good MPG", "Towing", "Safety tech", "None specific"],
+                message: "*sniffs around* 🐕\n\nAny must-have features? Tap all the ones you need:",
+                quickReplies: ["AWD / 4WD", "Leather seats", "Sunroof", "3rd row seating", "Apple CarPlay", "Good MPG", "Towing package", "Safety tech", "No specific needs"],
                 field: 'features',
                 multiSelect: true,
                 progress: { step: "Features", percent: 58 }
             },
             {
                 id: 'dealbreakers',
-                message: "Anything that's a dealbreaker? Things you definitely DON'T want?",
-                quickReplies: ["High mileage", "Certain colors", "Rebuilt title", "No specific dealbreakers"],
+                message: "Any dealbreakers? Things that would make you walk away?",
+                quickReplies: ["High mileage", "Certain colors", "Rebuilt/salvage title", "Nope, I'm flexible"],
                 field: 'dealbreakers',
                 progress: { step: "Preferences", percent: 65 }
             },
             {
                 id: 'timeline',
-                message: "When do you need the vehicle by?",
-                quickReplies: ["ASAP - this week", "Within 2 weeks", "Within a month", "No rush, just looking"],
+                message: "When do you need your new ride? I can hunt faster if it's urgent! 🏃",
+                quickReplies: ["ASAP - this week!", "Within 2 weeks", "Got about a month", "No rush, just browsing"],
                 field: 'timeline',
                 progress: { step: "Timeline", percent: 72 }
             },
             {
                 id: 'trade_in',
-                message: "Do you have a vehicle to trade in?",
-                quickReplies: ["Yes, I have a trade-in", "No trade-in", "Maybe, depends on the deal"],
+                message: "Got a vehicle to trade in? I can use it as leverage to get you a better deal! 💪",
+                quickReplies: ["Yes, I have one!", "Nope, no trade-in", "Maybe, depends on the offer"],
                 field: 'trade_in',
                 progress: { step: "Trade-in", percent: 78 }
             },
             {
                 id: 'trade_in_details',
-                message: "What vehicle are you trading? (Year, Make, Model, rough mileage)",
+                message: "*takes notes* 📝\n\nTell me about it — Year, Make, Model, and roughly how many miles?",
                 inputOnly: true,
                 field: 'trade_in_vehicle',
-                condition: (data) => data.trade_in === 'Yes, I have a trade-in',
+                condition: (data) => data.trade_in === 'Yes, I have one!',
                 progress: { step: "Trade-in details", percent: 80 }
             },
             {
                 id: 'trade_in_condition',
-                message: "How would you describe its condition?",
-                quickReplies: ["Excellent - like new", "Good - normal wear", "Fair - needs some work", "Poor - has issues"],
+                message: "And how's it holding up? Be honest — it helps me negotiate!",
+                quickReplies: ["Excellent - looks new", "Good - normal wear", "Fair - needs TLC", "Rough - but runs"],
                 field: 'trade_in_condition',
-                condition: (data) => data.trade_in === 'Yes, I have a trade-in',
+                condition: (data) => data.trade_in === 'Yes, I have one!',
                 progress: { step: "Trade-in condition", percent: 83 }
             },
             {
                 id: 'search_radius',
-                message: "How far are you willing to travel for the right deal?",
-                quickReplies: ["Local only (50 mi)", "Regional (100 mi)", "Will travel (250 mi)", "Nationwide - ship it to me"],
+                message: "How far will you travel for the perfect deal? Sometimes the best bone is a bit further away! 🦴",
+                quickReplies: ["Keep it local (50 mi)", "A bit further (100 mi)", "I'll drive for a deal (250 mi)", "Ship it to me nationwide!"],
                 field: 'search_radius',
                 progress: { step: "Search area", percent: 85 }
             },
             {
                 id: 'location',
-                message: "What's your zip code? I'll find dealers within a reasonable drive.",
+                message: "What's your zip code? I'll start hunting in your territory! 📍",
                 inputOnly: true,
                 field: 'zip_code',
                 validate: (value) => /^\d{5}$/.test(value),
-                errorMessage: "Oops! Please enter a valid 5-digit zip code.",
-                progress: { step: "Location", percent: 86 }
+                errorMessage: "*confused head tilt* 🐕 That doesn't look right. Try a 5-digit zip?",
+                progress: { step: "Location", percent: 88 }
             },
             {
                 id: 'name',
-                message: "Almost done! What's your first name?",
+                message: "*tail wagging* We're almost there!\n\nWhat's your first name? I like to know who I'm fetching for!",
                 inputOnly: true,
                 field: 'first_name',
-                progress: { step: "Contact info", percent: 90 }
+                progress: { step: "Contact info", percent: 92 }
             },
             {
                 id: 'email',
-                message: "And what's the best email to reach you at?",
+                message: "Nice to meet you, {first_name}! 🐕\n\nWhat email should I send the deals to?",
                 inputOnly: true,
                 field: 'email',
                 validate: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
-                errorMessage: "That doesn't look like a valid email. Try again?",
-                progress: { step: "Contact info", percent: 94 }
+                errorMessage: "*sniffs suspiciously* That email doesn't look quite right. Try again?",
+                progress: { step: "Contact info", percent: 95 }
             },
             {
                 id: 'phone',
-                message: "Last one — what's your phone number? (We'll only text you about your deals)",
+                message: "Last question! What's your phone number?\n\n(I'll only text about your car deals — no spam, promise! 🐕)",
                 inputOnly: true,
                 field: 'phone',
                 validate: (value) => /^[\d\s\-\(\)\.+]{10,}$/.test(value.replace(/\D/g, '')) && value.replace(/\D/g, '').length >= 10,
-                errorMessage: "Please enter a valid phone number.",
+                errorMessage: "Hmm, that doesn't look like a full phone number. Mind trying again?",
                 progress: { step: "Contact info", percent: 98 }
             },
             {
                 id: 'complete',
-                message: "Perfect, {first_name}! 🎉\n\nI've got everything I need. I'm going to start sniffing out the best deals for you right now.\n\nExpect to hear from me within 24 hours with some great options. I'll send updates to {email}.\n\nTalk soon!",
+                message: "*excited spinning* 🎉\n\nYES! I've got everything I need, {first_name}!\n\nI'm heading out to hunt down your perfect ride right now. Expect to hear from me within 24 hours with some tail-wagging good options.\n\nI'll send updates to {email}.\n\n*runs off to find deals* 🐕💨",
                 isEnd: true,
                 progress: { step: "Complete!", percent: 100 }
             }
@@ -851,13 +851,13 @@
             }
             
             // Handle special case: "How does this work?"
-            if (input === "How does this work?") {
+            if (input === "Wait, how does this work?") {
                 addMessage(input, true);
                 showTyping();
                 setTimeout(() => {
                     hideTyping();
-                    addMessage("Here's how it works:\n\n🔍 You tell me what car you want\n🏷️ I search inventory & contact dealers for you\n💰 I negotiate to get you the best price\n🤝 You only connect with the dealer when you're ready\n\nYour info stays private until YOU decide to share it. Ready to find your car?");
-                    showQuickReplies(["Let's do it!"]);
+                    addMessage("*sits down to explain* 🐕\n\nGreat question! Here's my trick:\n\n🔍 You tell me what car you want\n🏃 I run around searching thousands of listings\n📞 I contact dealers FOR you (they don't get your info)\n💰 I fetch back the best deals I find\n✅ YOU pick the winner — only then do we connect you\n\nYour info stays in my paws until you're ready. The dealers can't bug you!\n\nPretty cool right? Shall we start?");
+                    showQuickReplies(["Let's go! 🚗"]);
                 }, 1000);
                 return;
             }
